@@ -1,0 +1,2947 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <!--
+    ============================================================
+    KENNETH MUGO — Official Website
+    ============================================================
+    Project layout
+      index.html          this file: all the page content
+      css/style.css       all styles (table of contents at the top)
+      js/main.js          all behaviour (table of contents at the top)
+      images/             every photo (hero, about, gallery, avatars/ …)
+      (videos are hosted on YouTube — no videos/ folder needed)
+      audio/              ambient loop for the floating audio player
+      favicon/            optional favicon set (see the <head>)
+
+    Page order (top to bottom)
+      #cursor · #nav · #hero · #events · #about · #why-i-play ·
+      #journey · #media (videos + photo gallery) · #lightbox ·
+      #testimonials · #gear · #contact · footer · #audio-player
+
+    How to change things
+      Colours     → css/style.css, section 1 (design tokens)
+      Fonts       → css/style.css, section 1, and the Google Fonts links below
+      Text        → edit it right here; each section starts with a comment
+      Videos      → data-yt (YouTube video ID) + thumbnail <img> in each .vcard
+      Photos      → the <img src> in the gallery, about and hero sections
+    ============================================================
+  -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <!-- Browser/status-bar colour: one per scheme. JS (setTheme) keeps both in step with the site's own theme toggle. -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f0eafa" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d0a1a" />
+
+    <!-- Apply the saved / device theme before first paint (prevents a dark-to-light flash).
+         js/main.js (Theme toggle) takes over once it loads. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('kk-theme');
+          var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', saved || (dark ? 'dark' : 'light'));
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- ── Primary SEO ── -->
+    <!-- CHANGE: Update description with Kenneth's own words if desired -->
+    <title>Kenneth Mugo — Gospel Worship Guitarist | Nairobi, Kenya</title>
+    <meta
+      name="description"
+      content="Kenneth Mugo is a gospel worship guitarist based in Nairobi, Kenya. Available for church services, gospel concerts, worship conferences and studio sessions."
+    />
+    <meta
+      name="keywords"
+      content="Kenneth Mugo, worship guitarist, gospel guitar, Nairobi, Kenya, gospel band, worship music"
+    />
+    <meta name="author" content="Kenneth Mugo" />
+
+    <!-- ── Canonical URL ── -->
+    <!-- CHANGE: Replace with Kenneth's actual domain once the site is live -->
+    <link rel="canonical" href="https://kennethMugo.com" />
+
+    <!-- ── Open Graph (Facebook, WhatsApp, LinkedIn previews) ── -->
+    <!-- CHANGE: Replace og:image with a real hosted photo URL (1200x630px recommended) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kennethMugo.com" />
+    <meta property="og:title" content="Kenneth Mugo — Gospel Worship Guitarist" />
+    <meta
+      property="og:description"
+      content="Creating moments of worship through guitar. Based in Nairobi, Kenya — available for gospel events, church services and conferences."
+    />
+    <meta property="og:image" content="https://kennethMugo.com/images/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_KE" />
+    <meta property="og:site_name" content="Kenneth Mugo" />
+
+    <!-- ── Twitter / X Card ── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kenneth Mugo — Gospel Worship Guitarist" />
+    <meta
+      name="twitter:description"
+      content="Creating moments of worship through guitar. Based in Nairobi, Kenya."
+    />
+    <meta name="twitter:image" content="https://kennethMugo.com/images/og-cover.jpg" />
+
+    <!-- ── Structured Data (Google rich results) ── -->
+    <!-- Helps Google understand Kenneth is a musician/person -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Kenneth Mugo",
+        "jobTitle": "Worship Guitarist",
+        "description": "Gospel worship guitarist based in Nairobi, Kenya.",
+        "url": "https://kennethMugo.com",
+        "sameAs": [
+          "https://www.instagram.com/samwelageta?igsh=cnNzamQyM3NkcG9x",
+          "https://www.facebook.com/ageta.samwel",
+          "https://www.tiktok.com/@kingkaya04?_r=1&_t=ZS-97arJTjRSnk"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nairobi",
+          "addressCountry": "KE"
+        }
+      }
+    </script>
+
+    <!-- ── Favicon ── -->
+    <!-- CHANGE: Replace these with real favicon files.
+         Generate a full set at: https://realfavicongenerator.net
+         Place the files in a /favicon/ folder next to index.html. -->
+    <!-- Inline SVG favicon — works immediately with no extra files.
+         Uses the KK initials in gold on a dark background.          -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
+      <rect width='32' height='32' rx='6' fill='%230d0a1a'/>
+      <text x='50%25' y='54%25' dominant-baseline='middle'
+            text-anchor='middle' font-family='Georgia,serif'
+            font-size='14' font-weight='700' fill='%23C8922A'>KK</text>
+    </svg>"
+    />
+    <!-- Fallback for older browsers — swap for a real .ico file -->
+    <!-- <link rel="shortcut icon" href="favicon/favicon.ico"> -->
+    <!-- Apple devices -->
+    <!-- <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png"> -->
+
+    <!-- ── Google Fonts ── -->
+    <!-- Playfair Display: serif for headings/display text -->
+    <!-- Inter: clean sans-serif for body and UI elements  -->
+    <!-- Preconnect speeds up font loading by opening the TCP connection early -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- font-display=swap in the URL means the browser uses a system font
+         immediately and swaps to Playfair/Inter once they load — no blank text -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <!-- Fallback for no-JS: loads fonts normally -->
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- ── No-JS fallback ──
+         If JavaScript is disabled, .reveal elements stay at opacity:0
+         forever because the IntersectionObserver never fires.
+         This style block makes everything visible without JS.        -->
+    <noscript>
+      <style>
+        .reveal,
+        .reveal-group,
+        .reveal-group > * {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+
+  <body>
+    <!-- ============================================================
+         CUSTOM CURSOR (Desktop)
+         Positioned by JS on mousemove.
+         ============================================================ -->
+    <div id="cursor" aria-hidden="true"></div>
+    <div id="cursor-trail" aria-hidden="true"></div>
+
+    <!-- ============================================================
+         NAVIGATION BAR
+         ============================================================ -->
+    <nav id="nav" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="#hero" class="nav-logo" aria-label="Kenneth Mugo — home"> K<span>K</span> </a>
+
+        <!-- Desktop links -->
+        <ul class="nav-links" role="list">
+          <li><a href="#events">Events</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#media">Media</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <!-- Right controls -->
+        <div class="nav-right">
+          <!-- Theme toggle -->
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+            <!-- Moon icon: shown in dark mode -->
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <!-- Sun icon: shown in light mode -->
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="5" />
+              <line
+                x1="12"
+                y1="1"
+                x2="12"
+                y2="3"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="12"
+                y1="21"
+                x2="12"
+                y2="23"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="4.22"
+                y1="4.22"
+                x2="5.64"
+                y2="5.64"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="18.36"
+                y1="18.36"
+                x2="19.78"
+                y2="19.78"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="1"
+                y1="12"
+                x2="3"
+                y2="12"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="21"
+                y1="12"
+                x2="23"
+                y2="12"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="4.22"
+                y1="19.78"
+                x2="5.64"
+                y2="18.36"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="18.36"
+                y1="5.64"
+                x2="19.78"
+                y2="4.22"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+
+          <!-- Hamburger (mobile only) -->
+          <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+          </button>
+        </div>
+      </div>
+      <!-- .nav-inner -->
+
+      <!-- Mobile dropdown menu -->
+      <div class="mobile-menu" id="mobile-menu" role="menu">
+        <a href="#events" role="menuitem">Events</a>
+        <a href="#about" role="menuitem">About</a>
+        <a href="#media" role="menuitem">Media</a>
+        <a href="#testimonials" role="menuitem">Testimonials</a>
+        <a href="#contact" role="menuitem">Contact</a>
+      </div>
+    </nav>
+    <!-- #nav -->
+
+    <!-- ============================================================
+         HERO SECTION
+         Full viewport. Guitar strings. Name. Tagline. CTAs.
+         ============================================================ -->
+    <section id="hero" aria-label="Hero">
+      <!-- Background layers (z-index 0–2, behind content) -->
+      <!-- hero-bg: optional background photo (see "Hero background layers" in css/style.css) -->
+      <div class="hero-bg" aria-hidden="true"></div>
+      <!-- hero-bg-overlay: dark cinematic tint over the photo -->
+      <div class="hero-bg-overlay" aria-hidden="true"></div>
+      <div class="hero-stage-glow" aria-hidden="true"></div>
+      <div class="hero-spot-glow" aria-hidden="true"></div>
+
+      <!-- Interactive dot field (drawn by js/main.js → "Hero dot field") -->
+      <canvas class="hero-dots" id="hero-dots" aria-hidden="true"></canvas>
+
+      <!-- Guitar strings (6 vertical animated lines) -->
+      <div class="hero-strings" aria-hidden="true" id="hero-strings">
+        <div class="string" data-string="1"></div>
+        <div class="string" data-string="2"></div>
+        <div class="string" data-string="3"></div>
+        <div class="string" data-string="4"></div>
+        <div class="string" data-string="5"></div>
+        <div class="string" data-string="6"></div>
+      </div>
+
+      <!-- Hero photo: images/hero-ken.jpeg -->
+      <figure class="hero-portrait reveal">
+        <div class="hero-portrait-float">
+          <img
+            class="hero-portrait-art"
+            src="images/hero-ken.jpeg"
+            alt="Kenneth Mugo playing guitar"
+            width="1000"
+            height="1250"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+      </figure>
+
+      <!-- Content wrapper (gradient scrim behind text) -->
+      <div class="hero-content-wrap">
+        <div class="hero-content section">
+          <!-- Eyebrow label -->
+          <p class="hero-eyebrow reveal">Worship Guitarist · Nairobi, Kenya</p>
+
+          <!-- Main name — Kenneth (bold) + Mugo (italic gold) -->
+          <h1 class="hero-name reveal">
+            Kenneth<br />
+            <span class="hero-name-accent">Mugo</span>
+          </h1>
+
+          <!-- Tagline -->
+          <p class="hero-tagline reveal">Creating moments of worship<br />through guitar.</p>
+
+          <!-- CTA buttons -->
+          <div class="hero-ctas reveal">
+            <!-- Primary: triggers the floating audio player -->
+            <button class="btn-gold" id="hero-play-btn" aria-label="Play ambient guitar music">
+              <!-- Play triangle icon -->
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M2 1.5l10 5.5-10 5.5V1.5z" />
+              </svg>
+              Listen now
+            </button>
+
+            <!-- Secondary: scroll to events -->
+            <a href="#events" class="btn-ghost">
+              Upcoming events
+              <!-- Arrow icon -->
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path d="M2 6h8M6 2l4 4-4 4" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <!-- .hero-content -->
+      </div>
+      <!-- .hero-content-wrap -->
+
+      <!-- Scroll hint -->
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <svg viewBox="0 0 16 16">
+          <path
+            d="M8 2v12M2 8l6 6 6-6"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Scroll
+      </div>
+    </section>
+    <!-- #hero -->
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between hero and events
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,20 C100,40 200,0 300,20 C400,40 500,0 600,20 C700,40 800,0 900,20 C1000,40 1100,0 1200,20 L1200,40 L0,40 Z"
+          fill="currentColor"
+          opacity="0.06"
+        />
+        <path
+          d="M0,25 C150,5 250,38 400,22 C550,6 650,35 800,20 C950,5 1050,32 1200,18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.2"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         EVENTS SECTION
+         Upcoming performances in a horizontal swipe carousel.
+         Each card: date badge, event name, venue, optional tag.
+         TO ADD/EDIT EVENTS → find the .events-track div and
+         copy/edit any .event-card block inside it.
+         ============================================================ -->
+    <section id="events" aria-label="Upcoming events">
+      <div class="section">
+        <!-- Section header -->
+        <div class="events-header reveal-group">
+          <p class="eyebrow">Mark your calendar</p>
+          <h2 class="section-heading">Upcoming events</h2>
+          <p class="events-subtext">
+            From intimate church services to large gospel conferences — come experience worship
+            live.
+          </p>
+        </div>
+
+        <!-- Carousel wrapper — clips overflow so cards slide horizontally -->
+        <div class="events-carousel-wrap" aria-label="Events carousel">
+          <!-- Scrollable track — add/remove .event-card blocks freely -->
+          <div class="events-track" id="events-track" role="list">
+            <!-- ╔══════════════════════════════════════════════════════════╗
+                 ║  CHANGE #6l — UPCOMING EVENTS                            ║
+                 ║                                                          ║
+                 ║  For each event card, update:                            ║
+                 ║    • <span class="event-day">   — day number (e.g. 04)   ║
+                 ║    • <span class="event-month"> — month abbrev (e.g. Jul)║
+                 ║    • <p class="event-eyebrow">  — day · time             ║
+                 ║    • <h3 class="event-name">    — event name             ║
+                 ║    • <p class="event-venue">    — venue name             ║
+                 ║    • <span class="event-tag">   — tag label              ║
+                 ║                                                          ║
+                 ║  To add more events: duplicate any .event-card block.   ║
+                 ║  Past events: remove the card or comment it out.         ║
+                 ╚══════════════════════════════════════════════════════════╝ -->
+
+            <article class="event-card glass-card reveal" role="listitem">
+              <div class="event-card-inner">
+                <!-- Date badge -->
+                <div class="event-date-badge">
+                  <span class="event-day">04</span>
+                  <span class="event-month">Jul</span>
+                </div>
+                <!-- Event details -->
+                <div class="event-details">
+                  <p class="event-eyebrow">Friday · 6:00 PM</p>
+                  <h3 class="event-name">Gospel Night Live</h3>
+                  <p class="event-venue">
+                    <!-- Location pin icon -->
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M6 1a3.5 3.5 0 0 1 3.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 0 1 6 1z"
+                      />
+                      <circle cx="6" cy="4.5" r="1.2" />
+                    </svg>
+                    CITAM Valley Road, Nairobi
+                  </p>
+                </div>
+                <!-- Tag (optional — remove if not needed) -->
+                <span class="event-tag">Live band</span>
+              </div>
+            </article>
+
+            <article class="event-card glass-card reveal" role="listitem">
+              <div class="event-card-inner">
+                <div class="event-date-badge">
+                  <span class="event-day">20</span>
+                  <span class="event-month">Jul</span>
+                </div>
+                <div class="event-details">
+                  <p class="event-eyebrow">Sunday · 4:00 PM</p>
+                  <h3 class="event-name">Worship Night</h3>
+                  <p class="event-venue">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M6 1a3.5 3.5 0 0 1 3.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 0 1 6 1z"
+                      />
+                      <circle cx="6" cy="4.5" r="1.2" />
+                    </svg>
+                    Mavuno Church, Nairobi
+                  </p>
+                </div>
+                <span class="event-tag">Acoustic set</span>
+              </div>
+            </article>
+
+            <article class="event-card glass-card reveal" role="listitem">
+              <div class="event-card-inner">
+                <div class="event-date-badge">
+                  <span class="event-day">02</span>
+                  <span class="event-month">Aug</span>
+                </div>
+                <div class="event-details">
+                  <p class="event-eyebrow">Saturday · 5:00 PM</p>
+                  <h3 class="event-name">Kingdom Sound Conference</h3>
+                  <p class="event-venue">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M6 1a3.5 3.5 0 0 1 3.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 0 1 6 1z"
+                      />
+                      <circle cx="6" cy="4.5" r="1.2" />
+                    </svg>
+                    Kenyatta International Convention Centre
+                  </p>
+                </div>
+                <span class="event-tag event-tag--featured">Featured</span>
+              </div>
+            </article>
+
+            <article class="event-card glass-card reveal" role="listitem">
+              <div class="event-card-inner">
+                <div class="event-date-badge">
+                  <span class="event-day">17</span>
+                  <span class="event-month">Aug</span>
+                </div>
+                <div class="event-details">
+                  <p class="event-eyebrow">Sunday · 10:00 AM</p>
+                  <h3 class="event-name">Sunday Service</h3>
+                  <p class="event-venue">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M6 1a3.5 3.5 0 0 1 3.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 0 1 6 1z"
+                      />
+                      <circle cx="6" cy="4.5" r="1.2" />
+                    </svg>
+                    Nairobi Chapel, Ngong Road
+                  </p>
+                </div>
+                <span class="event-tag">Worship team</span>
+              </div>
+            </article>
+
+            <article class="event-card glass-card reveal" role="listitem">
+              <div class="event-card-inner">
+                <div class="event-date-badge">
+                  <span class="event-day">06</span>
+                  <span class="event-month">Sep</span>
+                </div>
+                <div class="event-details">
+                  <p class="event-eyebrow">Saturday · 7:00 PM</p>
+                  <h3 class="event-name">Voices of Praise Concert</h3>
+                  <p class="event-venue">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M6 1a3.5 3.5 0 0 1 3.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 0 1 6 1z"
+                      />
+                      <circle cx="6" cy="4.5" r="1.2" />
+                    </svg>
+                    Carnivore Grounds, Nairobi
+                  </p>
+                </div>
+                <span class="event-tag event-tag--featured">Featured</span>
+              </div>
+            </article>
+          </div>
+          <!-- .events-track -->
+
+          <!-- Carousel nav buttons (desktop) -->
+          <button
+            class="carousel-btn carousel-btn--prev"
+            id="events-prev"
+            aria-label="Previous events"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M11 4L6 9l5 5" />
+            </svg>
+          </button>
+          <button class="carousel-btn carousel-btn--next" id="events-next" aria-label="Next events">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M7 4l5 5-5 5" />
+            </svg>
+          </button>
+        </div>
+        <!-- .events-carousel-wrap -->
+
+        <!-- Dot indicators — JS fills these in -->
+        <div class="carousel-dots" id="events-dots" aria-hidden="true"></div>
+
+        <!-- Booking nudge -->
+        <div class="events-footer reveal">
+          <p class="events-footer-text">Want Kenneth at your event?</p>
+          <a href="#contact" class="btn-gold">
+            Book him now
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="M2 6h8M6 2l4 4-4 4" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <!-- .section -->
+    </section>
+    <!-- #events -->
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between events and about
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,15 C80,35 180,5 280,22 C380,38 460,8 560,18 C660,28 760,5 860,20 C960,35 1080,8 1200,22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.18"
+        />
+        <path
+          d="M0,30 C120,10 240,36 380,18 C520,0 640,32 780,15 C920,-2 1060,28 1200,14 L1200,40 L0,40Z"
+          fill="currentColor"
+          opacity="0.04"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         ABOUT SECTION
+         Two-column on desktop (photo left, text right).
+         Stacked on mobile (photo top, text below).
+         Includes: bio story, animated stat counters, social links.
+         TO EDIT: update bio paragraphs, stat values, and photo src.
+         ============================================================ -->
+    <section id="about" aria-label="About Kenneth">
+      <div class="section about-grid">
+        <!-- ── Left column: Photo ── -->
+        <div class="about-photo-col reveal">
+          <div class="about-photo-wrap">
+            <img
+              class="about-photo"
+              src="images/about-kenneth.jpg"
+              alt="Kenneth Mugo — worship guitarist"
+              loading="lazy"
+              decoding="async"
+            />
+
+            <!-- Floating accent card over photo -->
+            <div class="about-photo-accent glass-card">
+              <span class="about-photo-accent-number">6+</span>
+              <span class="about-photo-accent-label">Years playing</span>
+            </div>
+          </div>
+          <!-- .about-photo-wrap -->
+        </div>
+        <!-- .about-photo-col -->
+
+        <!-- ── Right column: Bio + Stats + Socials ── -->
+        <div class="about-text-col">
+          <div class="reveal">
+            <p class="eyebrow">The man behind the music</p>
+            <h2 class="section-heading">About Kenneth</h2>
+          </div>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6h — BIO TEXT                                   ║
+               ║                                                          ║
+               ║  Replace the three <p> paragraphs below with            ║
+               ║  Kenneth's real story. Keep it in 2–4 short paragraphs. ║
+               ║  Write as a story, not a list of facts.                 ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <div class="about-bio reveal">
+            <p>
+              I picked up my first guitar at 16, drawn not by ambition but by a quiet pull toward
+              something deeper. What started as a few chords learnt in a small Nairobi church
+              quickly became a calling &mdash; a way of translating what words alone couldn't carry.
+            </p>
+            <p>
+              At 22, I play lead guitar in a gospel band, supporting worship across churches,
+              conferences, and gospel events throughout Kenya. For me, playing is less about
+              performance and more about presence &mdash; I believe a single sustained note, played
+              at the right moment, can shift an entire room into worship.
+            </p>
+            <p>
+              From intimate Sunday services to large-stage gospel conferences, I've had the
+              privilege of supporting moments of worship that linger long after the music stops.
+            </p>
+          </div>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6i — STAT NUMBERS                               ║
+               ║                                                          ║
+               ║  Update data-target="N" to Kenneth's real numbers.       ║
+               ║  Also update the <span class="stat-label"> text.         ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <div class="about-stats reveal-group">
+            <div class="stat-item">
+              <div class="stat-number-wrap">
+                <span class="stat-number" data-target="6">0</span>
+                <span class="stat-suffix">+</span>
+              </div>
+              <span class="stat-label">Years playing</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-item">
+              <div class="stat-number-wrap">
+                <span class="stat-number" data-target="50">0</span>
+                <span class="stat-suffix">+</span>
+              </div>
+              <span class="stat-label">Events performed</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-item">
+              <div class="stat-number-wrap">
+                <span class="stat-number" data-target="3">0</span>
+                <span class="stat-suffix"></span>
+              </div>
+              <span class="stat-label">Bands &amp; teams</span>
+            </div>
+          </div>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6d — SOCIAL MEDIA LINKS (About section)         ║
+               ║                                                          ║
+               ║  Replace each href="#" with the real profile URL:        ║
+               ║    Instagram: https://instagram.com/YOUR_HANDLE          ║
+               ║    Facebook:  https://facebook.com/YOUR_PAGE             ║
+               ║    TikTok:    https://tiktok.com/@YOUR_HANDLE            ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <div class="about-socials reveal">
+            <p class="about-socials-label">Follow Kenneth</p>
+            <div class="about-socials-links">
+              <a
+                href="https://www.instagram.com/samwelageta?igsh=cnNzamQyM3NkcG9x"
+                class="social-link"
+                aria-label="Kenneth on Instagram"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+                Instagram
+              </a>
+
+              <a
+                href="https://www.facebook.com/ageta.samwel"
+                class="social-link"
+                aria-label="Kenneth on Facebook"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                  />
+                </svg>
+                Facebook
+              </a>
+
+              <a
+                href="https://www.tiktok.com/@kingkaya04?_r=1&_t=ZS-97arJTjRSnk"
+                class="social-link"
+                aria-label="Kenneth on TikTok"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.52V6.78a4.85 4.85 0 01-1.02-.09z"
+                  />
+                </svg>
+                TikTok
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- .about-text-col -->
+      </div>
+      <!-- .about-grid -->
+    </section>
+    <!-- #about -->
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between about and why-i-play
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,20 C200,0 400,38 600,18 C800,-2 1000,36 1200,20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.15"
+        />
+        <path
+          d="M0,32 C150,12 300,38 500,22 C700,6 900,34 1200,18 L1200,40 L0,40Z"
+          fill="currentColor"
+          opacity="0.04"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         WHY I PLAY — Personal statement
+         Full-width atmospheric block with decorative strings.
+         TO EDIT: update blockquote text and the paragraph below.
+         ============================================================ -->
+    <section id="why-i-play" aria-label="Why I Play">
+      <div class="section why-wrap">
+        <!-- Decorative strings (horizontal, like guitar fretboard) -->
+        <div class="why-strings" aria-hidden="true">
+          <div class="why-string"></div>
+          <div class="why-string"></div>
+          <div class="why-string"></div>
+        </div>
+
+        <div class="why-inner reveal">
+          <p class="eyebrow why-eyebrow">In Kenneth's words</p>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6j — "WHY I PLAY" QUOTE                         ║
+               ║  Replace the quote text with Kenneth's real words.        ║
+               ║  Also update the paragraph below it (.why-body).          ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <blockquote class="why-quote">
+            <span class="why-quote-mark" aria-hidden="true">&ldquo;</span>
+            I don't play to perform. I play to create a space where people can encounter something
+            greater than themselves. The guitar is just the door &mdash; worship is what's on the
+            other side.
+            <span class="why-quote-mark why-quote-mark--close" aria-hidden="true">&rdquo;</span>
+          </blockquote>
+
+          <p class="why-body">
+            For Kenneth, every note is intentional. Every set is a prayer. Whether he's playing to a
+            congregation of twenty or a crowd of thousands, the goal is always the same &mdash; to
+            get out of the way and let the music do what music was made for.
+          </p>
+
+          <div class="why-signature">
+            <div class="why-signature-line" aria-hidden="true"></div>
+            <span class="why-signature-name">Kenneth Mugo</span>
+            <div class="why-signature-line" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- #why-i-play -->
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between why-i-play and next section
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,18 C100,38 220,4 360,20 C500,36 620,6 760,22 C900,38 1040,8 1200,20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.15"
+        />
+        <path
+          d="M0,28 C180,8 340,36 520,18 C700,0 880,32 1200,16 L1200,40 L0,40Z"
+          fill="currentColor"
+          opacity="0.04"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         MUSICAL JOURNEY — Interactive vertical timeline
+         Each milestone: year, title, description, icon.
+         The connecting line "fills in" progressively as you scroll.
+         On mobile: single column. On desktop: alternating left/right.
+         TO EDIT: add/remove/update .journey-item blocks below.
+         ============================================================ -->
+    <section id="journey" aria-label="Musical Journey">
+      <div class="section">
+        <!-- Section header -->
+        <div class="journey-header reveal-group">
+          <p class="eyebrow">How it started</p>
+          <h2 class="section-heading">The journey so far</h2>
+          <p class="journey-subtext">Every milestone that shaped the musician Kenneth is today.</p>
+        </div>
+
+        <!-- Timeline container -->
+        <div class="journey-timeline" id="journey-timeline">
+          <!-- The vertical connecting line (fills on scroll via JS) -->
+          <div class="journey-line" aria-hidden="true">
+            <div class="journey-line-fill" id="journey-line-fill"></div>
+          </div>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6n — MUSICAL JOURNEY TIMELINE                   ║
+               ║                                                          ║
+               ║  For each milestone, update:                             ║
+               ║    • <div class="journey-year-badge"> — year or "Now"    ║
+               ║    • <h3 class="journey-title"> — milestone headline     ║
+               ║    • <p class="journey-desc">  — story paragraph         ║
+               ║                                                          ║
+               ║  data-side="left" or "right" controls which side the     ║
+               ║  card appears on in the desktop alternating layout.      ║
+               ║  To add more milestones: duplicate a .journey-item block.║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <!-- ── MILESTONE 1 ── -->
+          <div class="journey-item reveal" data-side="left">
+            <div class="journey-card glass-card">
+              <!-- Year badge -->
+              <div class="journey-year-badge">2018</div>
+              <!-- Icon -->
+              <div class="journey-icon" aria-hidden="true">
+                <!-- Guitar pick icon -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <path d="M12 2C8 2 4 5 4 9c0 5 8 13 8 13s8-8 8-13c0-4-4-7-8-7z" />
+                </svg>
+              </div>
+              <h3 class="journey-title">First guitar</h3>
+              <p class="journey-desc">
+                At 16, I received my first acoustic guitar &mdash; a secondhand instrument that
+                would change everything. Within weeks I was learning worship songs by ear in my
+                family church.
+              </p>
+            </div>
+            <!-- Dot on the timeline line -->
+            <div class="journey-dot" aria-hidden="true">
+              <div class="journey-dot-inner"></div>
+            </div>
+          </div>
+
+          <!-- ── MILESTONE 2 ── -->
+          <div class="journey-item reveal" data-side="right">
+            <div class="journey-card glass-card">
+              <div class="journey-year-badge">2019</div>
+              <div class="journey-icon" aria-hidden="true">
+                <!-- Church/building icon -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+              </div>
+              <h3 class="journey-title">First church performance</h3>
+              <p class="journey-desc">
+                I played my first full Sunday service as part of the worship team. Nervous hands, a
+                room of faithful people, and the moment I finally understood what the guitar was
+                for.
+              </p>
+            </div>
+            <div class="journey-dot" aria-hidden="true">
+              <div class="journey-dot-inner"></div>
+            </div>
+          </div>
+
+          <!-- ── MILESTONE 3 ── -->
+          <div class="journey-item reveal" data-side="left">
+            <div class="journey-card glass-card">
+              <div class="journey-year-badge">2020</div>
+              <div class="journey-icon" aria-hidden="true">
+                <!-- Music notes icon -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <path d="M9 18V5l12-2v13" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+              </div>
+              <h3 class="journey-title">Switching to electric</h3>
+              <p class="journey-desc">
+                Switching from acoustic to electric opened a whole new sonic world. I began
+                exploring effects pedals, lead playing, and the expressive range that would come to
+                define my worship style.
+              </p>
+            </div>
+            <div class="journey-dot" aria-hidden="true">
+              <div class="journey-dot-inner"></div>
+            </div>
+          </div>
+
+          <!-- ── MILESTONE 4 ── -->
+          <div class="journey-item reveal" data-side="right">
+            <div class="journey-card glass-card">
+              <div class="journey-year-badge">2021</div>
+              <div class="journey-icon" aria-hidden="true">
+                <!-- Users/band icon -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                  <path d="M16 3.13a4 4 0 010 7.75" />
+                </svg>
+              </div>
+              <h3 class="journey-title">Joining the band</h3>
+              <p class="journey-desc">
+                I joined my first full gospel band as lead guitarist &mdash; a turning point that
+                pushed me to grow fast. Playing alongside seasoned musicians sharpened both my
+                technique and my ear for worship dynamics.
+              </p>
+            </div>
+            <div class="journey-dot" aria-hidden="true">
+              <div class="journey-dot-inner"></div>
+            </div>
+          </div>
+
+          <!-- ── MILESTONE 5 ── -->
+          <div class="journey-item reveal" data-side="left">
+            <div class="journey-card glass-card">
+              <div class="journey-year-badge">2023</div>
+              <div class="journey-icon" aria-hidden="true">
+                <!-- Mic/stage icon -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+                  <path d="M19 10v2a7 7 0 01-14 0v-2" />
+                  <line x1="12" y1="19" x2="12" y2="23" />
+                  <line x1="8" y1="23" x2="16" y2="23" />
+                </svg>
+              </div>
+              <h3 class="journey-title">First major conference</h3>
+              <p class="journey-desc">
+                Playing a large-scale gospel conference for the first time &mdash; thousands in
+                attendance, a full stage setup, and lights bright enough to feel like a different
+                world. I held my own, and I haven't looked back since.
+              </p>
+            </div>
+            <div class="journey-dot" aria-hidden="true">
+              <div class="journey-dot-inner"></div>
+            </div>
+          </div>
+
+          <!-- ── MILESTONE 6 — Present ── -->
+          <div class="journey-item reveal" data-side="right">
+            <div class="journey-card glass-card journey-card--present">
+              <div class="journey-year-badge journey-year-badge--present">Now</div>
+              <div class="journey-icon journey-icon--present" aria-hidden="true">
+                <!-- Star/current icon -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
+              </div>
+              <h3 class="journey-title">Writing the next chapter</h3>
+              <p class="journey-desc">
+                At 22, I'm still growing &mdash; as a worship guitarist, session musician, and live
+                performer. The journey is far from over. Every service, every stage, every string is
+                another verse in an unfinished song.
+              </p>
+            </div>
+            <div class="journey-dot journey-dot--present" aria-hidden="true">
+              <div class="journey-dot-inner"></div>
+            </div>
+          </div>
+        </div>
+        <!-- .journey-timeline -->
+      </div>
+      <!-- .section -->
+    </section>
+    <!-- #journey -->
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between journey and next section
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,22 C160,4 320,38 480,20 C640,2 800,36 960,18 C1040,10 1120,28 1200,22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.15"
+        />
+        <path
+          d="M0,30 C200,10 400,36 600,20 C800,4 1000,32 1200,18 L1200,40 L0,40Z"
+          fill="currentColor"
+          opacity="0.04"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         MEDIA SECTION
+         Two parts:
+           A) Video showcase — YouTube videos shown as thumbnails with animated play buttons.
+              Pressing one moves it to the big slot and plays it.
+           B) Photo gallery — masonry grid of photos (images/ folder).
+              Clicking any photo opens a lightbox overlay.
+
+         TO EDIT VIDEOS:  change data-yt (the ID after v= in the YouTube link) and the
+                          thumbnail <img> URL inside each .vcard.
+         TO EDIT PHOTOS:  change src/alt on each .gallery-item <img>.
+                          Add more by duplicating a .gallery-item block.
+         ============================================================ -->
+    <section id="media" aria-label="Media">
+      <div class="section">
+        <!-- Section header -->
+        <div class="media-header reveal-group">
+          <p class="eyebrow">See &amp; hear</p>
+          <h2 class="section-heading">Kenneth live</h2>
+          <p class="media-subtext">
+            Performance clips, worship moments, and a glimpse behind the scenes.
+          </p>
+        </div>
+
+        <!-- ── Video showcase ──
+             • Nothing autoplays. Each card shows a YouTube thumbnail; the video only loads when play is pressed.
+             • Pressing a play button moves that video into the big slot and plays it.
+             • To add a video, copy one <article class="vcard"> below, change data-yt and the
+               thumbnail URL to the new YouTube ID, then update the title, meta text and aria-labels. The duration
+               badge fills in automatically from the file.
+             • The FIRST card starts as the big active video; the rest sit in a swipeable row.
+             • Layout + behaviour: js/main.js → "Video showcase". -->
+        <div class="media-video-wrap reveal">
+          <div class="video-stage" id="video-stage" role="group" aria-label="Featured videos">
+            <!-- Video 1: videos/makofi.mp4 -->
+            <article class="vcard is-active" aria-label="Makofi">
+              <div class="vcard-media" data-yt="qRoLWt53TGY" data-title="Makofi (Live) - Grace Njeri Ft. Ashley Isichi &amp; Grace Katana [Official Video]">
+                <img src="https://i.ytimg.com/vi/qRoLWt53TGY/hqdefault.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="vcard-shade"></div>
+              <div class="vcard-info">
+                <span class="vcard-eyebrow">Featured performance</span>
+                <h3 class="vcard-title">Makofi</h3>
+                <p class="vcard-meta">Grace Njeri Ft. Ashley Isichi &amp; Grace Katana · 2026</p>
+              </div>
+              <span class="vcard-duration">14:57</span>
+              <button type="button" class="vcard-play" aria-label="Play: Makofi">
+                <span
+                  class="vcard-ring vcard-ring--long"
+                  data-ring="Turn it up · Press play · "
+                  aria-hidden="true"
+                ></span>
+                <span
+                  class="vcard-ring vcard-ring--short"
+                  data-ring="Press play · "
+                  aria-hidden="true"
+                ></span>
+                <svg class="vcard-play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7 4.5l13 7.5-13 7.5V4.5z"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </article>
+
+            <!-- Video 2: videos/ebenezer.mp4 -->
+            <article class="vcard" aria-label="Ebenezer">
+              <div class="vcard-media" data-yt="IEXcVIxogGg" data-title="Ebenezer | ICC Nairobi Worship Cover">
+                <img src="https://i.ytimg.com/vi/IEXcVIxogGg/hqdefault.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="vcard-shade"></div>
+              <div class="vcard-info">
+                <span class="vcard-eyebrow">Featured performance</span>
+                <h3 class="vcard-title">Ebenezer</h3>
+                <p class="vcard-meta">ICC Nairobi Worship Cover · 2026</p>
+              </div>
+              <span class="vcard-duration">6:13</span>
+              <button type="button" class="vcard-play" aria-label="Play: Ebenezer">
+                <span
+                  class="vcard-ring vcard-ring--long"
+                  data-ring="Turn it up · Press play · "
+                  aria-hidden="true"
+                ></span>
+                <span
+                  class="vcard-ring vcard-ring--short"
+                  data-ring="Press play · "
+                  aria-hidden="true"
+                ></span>
+                <svg class="vcard-play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7 4.5l13 7.5-13 7.5V4.5z"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </article>
+
+            <!-- Video 3: videos/see-a-victory-worship.mp4 -->
+            <article class="vcard" aria-label="See A Victory Worship Medley">
+              <div class="vcard-media" data-yt="QQsBsa2x6CU" data-title="See A Victory Worship Medley | ICC Nairobi Worship Set">
+                <img src="https://i.ytimg.com/vi/QQsBsa2x6CU/hqdefault.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="vcard-shade"></div>
+              <div class="vcard-info">
+                <span class="vcard-eyebrow">Featured performance</span>
+                <h3 class="vcard-title">See A Victory Worship Medley</h3>
+                <p class="vcard-meta">ICC Nairobi Worship Set · 2026</p>
+              </div>
+              <span class="vcard-duration">8:45</span>
+              <button
+                type="button"
+                class="vcard-play"
+                aria-label="Play: See A Victory Worship Medley"
+              >
+                <span
+                  class="vcard-ring vcard-ring--long"
+                  data-ring="Turn it up · Press play · "
+                  aria-hidden="true"
+                ></span>
+                <span
+                  class="vcard-ring vcard-ring--short"
+                  data-ring="Press play · "
+                  aria-hidden="true"
+                ></span>
+                <svg class="vcard-play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7 4.5l13 7.5-13 7.5V4.5z"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </article>
+
+            <!-- Video 4: videos/ainuliwe.mp4 -->
+            <article class="vcard" aria-label="Ainuliwe Medley">
+              <div class="vcard-media" data-yt="MOtNFoRPX2M" data-title="Ainuliwe Medley - Grace Njeri | YAH Live Recording [Official Video]">
+                <img src="https://i.ytimg.com/vi/MOtNFoRPX2M/hqdefault.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="vcard-shade"></div>
+              <div class="vcard-info">
+                <span class="vcard-eyebrow">Featured performance</span>
+                <h3 class="vcard-title">Ainuliwe Medley</h3>
+                <p class="vcard-meta">Grace Njeri | YAH Live Recording · 2025</p>
+              </div>
+              <span class="vcard-duration">15:01</span>
+              <button
+                type="button"
+                class="vcard-play"
+                aria-label="Play: Ainuliwe Medley"
+              >
+                <span
+                  class="vcard-ring vcard-ring--long"
+                  data-ring="Turn it up · Press play · "
+                  aria-hidden="true"
+                ></span>
+                <span
+                  class="vcard-ring vcard-ring--short"
+                  data-ring="Press play · "
+                  aria-hidden="true"
+                ></span>
+                <svg class="vcard-play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7 4.5l13 7.5-13 7.5V4.5z"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </article>
+
+            <!-- Video 5: videos/shield-me.mp4 -->
+            <article class="vcard" aria-label="Shield Me">
+              <div class="vcard-media" data-yt="ysI4elEs0bU" data-title="Shield Me (Live) - Grace Njeri | YAH Live Recording [Official Video]">
+                <img src="https://i.ytimg.com/vi/ysI4elEs0bU/hqdefault.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="vcard-shade"></div>
+              <div class="vcard-info">
+                <span class="vcard-eyebrow">Featured performance</span>
+                <h3 class="vcard-title">Shield Me</h3>
+                <p class="vcard-meta">Grace Njeri | YAH Live Recording · 2026</p>
+              </div>
+              <span class="vcard-duration">10:21</span>
+              <button type="button" class="vcard-play" aria-label="Play: Shield Me">
+                <span
+                  class="vcard-ring vcard-ring--long"
+                  data-ring="Turn it up · Press play · "
+                  aria-hidden="true"
+                ></span>
+                <span
+                  class="vcard-ring vcard-ring--short"
+                  data-ring="Press play · "
+                  aria-hidden="true"
+                ></span>
+                <svg class="vcard-play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7 4.5l13 7.5-13 7.5V4.5z"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </article>
+
+            <!-- Video 6: videos/bwana-umeinuliwa.mp4 -->
+            <article class="vcard" aria-label="Bwana Umeinuliwa">
+              <div class="vcard-media" data-yt="5uadjzufQJ0" data-title="Bwana Umeinuliwa - Grace Njeri | YAH Live Recording [Official Video]">
+                <img src="https://i.ytimg.com/vi/5uadjzufQJ0/hqdefault.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="vcard-shade"></div>
+              <div class="vcard-info">
+                <span class="vcard-eyebrow">Featured performance</span>
+                <h3 class="vcard-title">Bwana Umeinuliwa</h3>
+                <p class="vcard-meta">Grace Njeri | YAH Live Recording · 2026</p>
+              </div>
+              <span class="vcard-duration">13:46</span>
+              <button
+                type="button"
+                class="vcard-play"
+                aria-label="Play: Bwana Umeinuliwa"
+              >
+                <span
+                  class="vcard-ring vcard-ring--long"
+                  data-ring="Turn it up · Press play · "
+                  aria-hidden="true"
+                ></span>
+                <span
+                  class="vcard-ring vcard-ring--short"
+                  data-ring="Press play · "
+                  aria-hidden="true"
+                ></span>
+                <svg class="vcard-play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7 4.5l13 7.5-13 7.5V4.5z"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </article>
+          </div>
+          <!-- #video-stage -->
+        </div>
+        <!-- .media-video-wrap -->
+
+        <!-- ── PART B: PHOTO GALLERY ── -->
+        <div class="media-gallery-header reveal">
+          <h3 class="gallery-heading">Live gallery</h3>
+          <p class="gallery-subtext">Stage lights, worship moments &amp; behind the scenes.</p>
+        </div>
+
+        <!-- Filter buttons — data-filter must match each item's data-category below -->
+        <div class="gallery-filters reveal" role="group" aria-label="Filter gallery">
+          <button class="gallery-filter is-active" data-filter="all">All</button>
+          <button class="gallery-filter" data-filter="live">Live</button>
+          <button class="gallery-filter" data-filter="backstage">Backstage</button>
+          <button class="gallery-filter" data-filter="gear">Gear</button>
+          <button class="gallery-filter" data-filter="in-the-wild">In the Wild</button>
+        </div>
+
+        <!-- Masonry grid — photos fill columns top-to-bottom -->
+        <div class="gallery-grid reveal" id="gallery-grid">
+          <div class="gallery-item" data-category="live">
+            <img src="images/live-1.jpg" alt="Kenneth Mugo performing on stage" loading="lazy" />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Live</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--tall" data-category="in-the-wild">
+            <img
+              src="images/In the Wild-1.jpeg"
+              alt="Kenneth Mugo fretboard closeup during worship"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">In The Wild</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--tall" data-category="gear">
+            <img
+              src="images/Gear-1.jpg"
+              alt="Kenneth Mugo fretboard closeup during worship"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Gear</span>
+            </div>
+          </div>
+
+          <div class="gallery-item" data-category="backstage">
+            <img
+              src="images/backstage-1.jpg"
+              alt="Kenneth Mugo soundcheck backstage"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Backstage</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--tall" data-category="gear">
+            <img
+              src="images/Gear-2.jpg"
+              alt="Kenneth Mugo fretboard closeup during worship"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Gear</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--wide" data-category="live">
+            <img
+              src="images/live-2.jpg"
+              alt="Kenneth Mugo performing at gospel conference"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Live</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--wide" data-category="live">
+            <img
+              src="images/live-4.jpg"
+              alt="Kenneth Mugo performing at gospel conference"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Live</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--tall" data-category="gear">
+            <img
+              src="images/Gear-3.jpg"
+              alt="Kenneth Mugo fretboard closeup during worship"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Gear</span>
+            </div>
+          </div>
+
+          <div class="gallery-item" data-category="in-the-wild">
+            <img
+              src="images/In the wild-2.jpeg"
+              alt="Kenneth Mugo praying before the set"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">In The Wild</span>
+            </div>
+          </div>
+
+          <div class="gallery-item" data-category="in-the-wild">
+            <img src="images/In the Wild-4.jpg" alt="Kenneth Mugo in the wild" loading="lazy" />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">In The Wild</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--tall" data-category="backstage">
+            <img
+              src="images/backstage-2.jpg"
+              alt="Kenneth Mugo backstage rehearsal"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Backstage</span>
+            </div>
+          </div>
+
+          <div class="gallery-item gallery-item--tall" data-category="backstage">
+            <img
+              src="images/backstage-3.jpg"
+              alt="Kenneth Mugo backstage rehearsal"
+              loading="lazy"
+            />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Backstage</span>
+            </div>
+          </div>
+
+          <div class="gallery-item" data-category="live">
+            <img src="images/live-3.jpg" alt="Kenneth Mugo stage silhouette" loading="lazy" />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">Live</span>
+            </div>
+          </div>
+
+          <div class="gallery-item" data-category="in-the-wild">
+            <img src="images/In the Wild-3.jpeg" alt="Kenneth Mugo in the wild" loading="lazy" />
+            <div class="gallery-item-overlay">
+              <span class="gallery-item-tag">In The Wild</span>
+            </div>
+          </div>
+        </div>
+        <!-- .gallery-grid -->
+
+        <!-- Show more / collapse button — mobile only.
+             JS controls which items are hidden and toggles this button. -->
+        <div class="gallery-toggle-wrap" id="gallery-toggle-wrap">
+          <button
+            class="gallery-toggle-btn btn-ghost"
+            id="gallery-toggle-btn"
+            aria-expanded="false"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              id="gallery-toggle-icon"
+              aria-hidden="true"
+            >
+              <path d="M2 4l5 5 5-5" />
+            </svg>
+            Show all photos
+          </button>
+        </div>
+      </div>
+      <!-- .section -->
+    </section>
+    <!-- #media -->
+
+    <!-- ============================================================
+         LIGHTBOX OVERLAY
+         Full-screen overlay shown when a gallery photo is clicked.
+         JS injects the image src into .lightbox-img.
+         ============================================================ -->
+    <div
+      id="lightbox"
+      class="lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo lightbox"
+      hidden
+    >
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M4 4l12 12M16 4L4 16" />
+        </svg>
+      </button>
+      <div class="lightbox-inner">
+        <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+        <p class="lightbox-caption" id="lightbox-caption"></p>
+      </div>
+      <div class="lightbox-bg" id="lightbox-bg"></div>
+    </div>
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between media and testimonials
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,22 C160,4 320,38 480,20 C640,2 800,36 960,18 C1040,10 1120,28 1200,22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.15"
+        />
+        <path
+          d="M0,30 C200,10 400,36 600,20 C800,4 1000,32 1200,18 L1200,40 L0,40Z"
+          fill="currentColor"
+          opacity="0.04"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         TESTIMONIALS SECTION
+         Auto-advancing carousel with manual dot/arrow navigation.
+         Each slide: quote, author name, role, and avatar initial.
+         TO ADD/EDIT: duplicate any .testimonial-slide block and
+         update the quote, name, role, and data-initial attribute.
+         ============================================================ -->
+    <section id="testimonials" aria-label="Testimonials">
+      <div class="section">
+        <!-- Section header -->
+        <div class="testi-header reveal-group">
+          <p class="eyebrow">What people say</p>
+          <h2 class="section-heading">Voices of the ministry</h2>
+        </div>
+
+        <!-- Carousel outer -->
+        <div class="testi-carousel reveal" id="testi-carousel" aria-roledescription="carousel">
+          <!-- Slides track -->
+          <div class="testi-track" id="testi-track" aria-live="polite">
+            <!-- ╔══════════════════════════════════════════════════════════╗
+                 ║  CHANGE #6k — TESTIMONIAL QUOTES                         ║
+                 ║                                                          ║
+                 ║  For each slide, update:                                 ║
+                 ║    • The <blockquote> text — the actual quote            ║
+                 ║    • <p class="testi-name"> — person's full name         ║
+                 ║    • <p class="testi-role"> — their role/church          ║
+                 ║    • data-initial="X" — first letter of their name       ║
+                 ║      (or swap to a photo — see CHANGE #5)               ║
+                 ║                                                          ║
+                 ║  To add more slides: duplicate a full                    ║
+                 ║  <div class="testimonial-slide"> block.                  ║
+                 ║  Update aria-label="Testimonial N of TOTAL" too.         ║
+                 ╚══════════════════════════════════════════════════════════╝ -->
+            <!-- ── Slide 1 ── -->
+            <div class="testimonial-slide" role="group" aria-label="Testimonial 1 of 5">
+              <div class="testi-quote-mark" aria-hidden="true">&ldquo;</div>
+              <blockquote class="testi-quote">
+                Kenneth doesn&rsquo;t just play notes. He helps create an atmosphere of worship that
+                carries the entire congregation into God&rsquo;s presence. Every time he picks up
+                that guitar, something shifts in the room.
+              </blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" aria-hidden="true">
+                  <img src="images/avatars/avatar-1.jpg" alt="Pastor James Mwangi" loading="lazy" />
+                </div>
+                <div class="testi-author-info">
+                  <p class="testi-name">Pastor James Mwangi</p>
+                  <p class="testi-role">Senior Pastor · CITAM Valley Road</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Slide 2 ── -->
+            <div class="testimonial-slide" role="group" aria-label="Testimonial 2 of 5">
+              <div class="testi-quote-mark" aria-hidden="true">&ldquo;</div>
+              <blockquote class="testi-quote">
+                Playing alongside Kenneth is a joy. He listens, he responds, and he never tries to
+                outshine anyone. He plays for the worship, not for the applause &mdash; and that
+                makes all the difference.
+              </blockquote>
+              <div class="testi-author">
+                <!-- Testimonial avatar — file: images/avatars/avatar-2.jpg
+                     Drop the file in images/avatars/ and it appears automatically.
+                     The initial letter shows as fallback if the photo is missing. -->
+                <div class="testi-avatar" aria-hidden="true">
+                  <img src="images/avatars/avatar-2.jpg" alt="Sarah Njoki" loading="lazy" />
+                </div>
+                <div class="testi-author-info">
+                  <p class="testi-name">Sarah Njoki</p>
+                  <p class="testi-role">Worship Leader &amp; Vocalist</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Slide 3 ── -->
+            <div class="testimonial-slide" role="group" aria-label="Testimonial 3 of 5">
+              <div class="testi-quote-mark" aria-hidden="true">&ldquo;</div>
+              <blockquote class="testi-quote">
+                We booked Kenneth for our annual gospel conference and the feedback from the
+                congregation was extraordinary. His playing elevated the entire event. We
+                won&rsquo;t do another conference without him.
+              </blockquote>
+              <div class="testi-author">
+                <!-- Testimonial avatar — file: images/avatars/avatar-3.jpg
+                     Drop the file in images/avatars/ and it appears automatically.
+                     The initial letter shows as fallback if the photo is missing. -->
+                <div class="testi-avatar" aria-hidden="true">
+                  <img src="images/avatars/avatar-3.jpg" alt="David Kariuki" loading="lazy" />
+                </div>
+                <div class="testi-author-info">
+                  <p class="testi-name">David Kariuki</p>
+                  <p class="testi-role">Events Director · Kingdom Sound Conference</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Slide 4 ── -->
+            <div class="testimonial-slide" role="group" aria-label="Testimonial 4 of 5">
+              <div class="testi-quote-mark" aria-hidden="true">&ldquo;</div>
+              <blockquote class="testi-quote">
+                I&rsquo;ve watched Kenneth grow from a nervous teenager playing his first Sunday
+                service to a confident, anointed musician. His dedication to his craft and to God is
+                unmistakeable.
+              </blockquote>
+              <div class="testi-author">
+                <!-- Testimonial avatar — file: images/avatars/avatar-4.jpg
+                     Drop the file in images/avatars/ and it appears automatically.
+                     The initial letter shows as fallback if the photo is missing. -->
+                <div class="testi-avatar" aria-hidden="true">
+                  <img src="images/avatars/avatar-4.jpg" alt="Grace Wambui" loading="lazy" />
+                </div>
+                <div class="testi-author-info">
+                  <p class="testi-name">Grace Wambui</p>
+                  <p class="testi-role">Worship Director · Mavuno Church</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Slide 5 ── -->
+            <div class="testimonial-slide" role="group" aria-label="Testimonial 5 of 5">
+              <div class="testi-quote-mark" aria-hidden="true">&ldquo;</div>
+              <blockquote class="testi-quote">
+                What sets Kenneth apart is his spirit. He prays before he plays, he serves the team,
+                and his humility on and off the stage is something every young musician should
+                aspire to.
+              </blockquote>
+              <div class="testi-author">
+                <!-- Testimonial avatar — file: images/avatars/avatar-5.jpg
+                     Drop the file in images/avatars/ and it appears automatically.
+                     The initial letter shows as fallback if the photo is missing. -->
+                <div class="testi-avatar" aria-hidden="true">
+                  <img src="images/avatars/avatar-5.jpg" alt="Michael Otieno" loading="lazy" />
+                </div>
+                <div class="testi-author-info">
+                  <p class="testi-name">Michael Otieno</p>
+                  <p class="testi-role">Bandleader &amp; Session Musician</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- .testi-track -->
+
+          <!-- Arrow navigation -->
+          <button
+            class="testi-arrow testi-arrow--prev"
+            id="testi-prev"
+            aria-label="Previous testimonial"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M11 4L6 9l5 5" />
+            </svg>
+          </button>
+          <button
+            class="testi-arrow testi-arrow--next"
+            id="testi-next"
+            aria-label="Next testimonial"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M7 4l5 5-5 5" />
+            </svg>
+          </button>
+        </div>
+        <!-- .testi-carousel -->
+
+        <!-- Dot indicators — built by JS -->
+        <div class="testi-dots" id="testi-dots" aria-label="Testimonial navigation"></div>
+
+        <!-- Auto-advance progress bar -->
+        <div class="testi-progress" aria-hidden="true">
+          <div class="testi-progress-fill" id="testi-progress-fill"></div>
+        </div>
+      </div>
+      <!-- .section -->
+    </section>
+    <!-- #testimonials -->
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between testimonials and gear
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,20 C180,38 360,4 540,22 C720,40 900,8 1200,20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.15"
+        />
+        <path
+          d="M0,28 C160,8 340,36 540,18 C740,0 940,32 1200,16 L1200,40 L0,40Z"
+          fill="currentColor"
+          opacity="0.04"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         GEAR SECTION
+         Kenneth's guitar rig — guitar, amp, effects, accessories.
+         Organised into category tabs: Guitar / Amp / Pedals / Extras.
+         Each gear card: icon, name, brand, short description.
+         TO EDIT: update gear items in each .gear-panel below.
+         TO ADD A CATEGORY: duplicate a tab button + gear-panel pair.
+         ============================================================ -->
+    <section id="gear" aria-label="Guitar Gear">
+      <div class="section">
+        <!-- Section header -->
+        <div class="gear-header reveal-group">
+          <p class="eyebrow">The rig</p>
+          <h2 class="section-heading">Kenneth&rsquo;s gear</h2>
+          <p class="gear-subtext">
+            The instruments and tools that shape Kenneth&rsquo;s sound on stage and in the studio.
+          </p>
+        </div>
+
+        <!-- ── Category tabs ── -->
+        <div class="gear-tabs reveal" role="tablist" aria-label="Gear categories">
+          <button
+            class="gear-tab is-active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="gear-panel-guitar"
+            id="gear-tab-guitar"
+            data-panel="gear-panel-guitar"
+          >
+            <!-- Guitar icon -->
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M12 2C8 2 4 5 4 9c0 5 8 13 8 13s8-8 8-13c0-4-4-7-8-7z" />
+            </svg>
+            Guitar
+          </button>
+          <button
+            class="gear-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="gear-panel-amp"
+            id="gear-tab-amp"
+            data-panel="gear-panel-amp"
+          >
+            <!-- Speaker icon -->
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="14" height="18" rx="2" />
+              <circle cx="10" cy="13" r="3" />
+              <circle cx="10" cy="13" r="1" />
+              <rect x="6" y="5" width="8" height="4" rx="1" />
+            </svg>
+            Amp
+          </button>
+          <button
+            class="gear-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="gear-panel-pedals"
+            id="gear-tab-pedals"
+            data-panel="gear-panel-pedals"
+          >
+            <!-- Pedal/effects icon -->
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <rect x="2" y="6" width="20" height="13" rx="2" />
+              <circle cx="8" cy="12" r="2.5" />
+              <circle cx="16" cy="12" r="2.5" />
+              <line x1="2" y1="9" x2="22" y2="9" />
+            </svg>
+            Pedals
+          </button>
+          <button
+            class="gear-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="gear-panel-extras"
+            id="gear-tab-extras"
+            data-panel="gear-panel-extras"
+          >
+            <!-- Extras/accessories icon -->
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"
+              />
+            </svg>
+            Extras
+          </button>
+        </div>
+        <!-- .gear-tabs -->
+
+        <!-- ── Gear panels — one per tab ── -->
+
+        <!-- ╔══════════════════════════════════════════════════════════╗
+             ║  CHANGE #6m — GEAR / RIG                                ║
+             ║                                                          ║
+             ║  For each .gear-card, update:                            ║
+             ║    • <div class="gear-card-badge"> — role label          ║
+             ║    • <h3 class="gear-card-name">  — gear name            ║
+             ║    • <p class="gear-card-brand">  — brand · model line   ║
+             ║    • <p class="gear-card-desc">   — personal description  ║
+             ║                                                          ║
+             ║  To add a new category tab: duplicate a .gear-tab button ║
+             ║  and a .gear-panel block, giving both matching IDs.      ║
+             ╚══════════════════════════════════════════════════════════╝ -->
+        <!-- GUITAR PANEL -->
+        <div
+          class="gear-panel is-active"
+          id="gear-panel-guitar"
+          role="tabpanel"
+          aria-labelledby="gear-tab-guitar"
+        >
+          <div class="gear-grid reveal-group">
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <!-- Electric guitar silhouette -->
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <path d="M12 2C8 2 4 5 4 9c0 5 8 13 8 13s8-8 8-13c0-4-4-7-8-7z" />
+                  <circle cx="12" cy="9" r="2" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Main axe</div>
+              <h3 class="gear-card-name">Fender Stratocaster</h3>
+              <p class="gear-card-brand">Fender · Player Series</p>
+              <p class="gear-card-desc">
+                My go-to for live worship. The single-coil pickups deliver clean, bell-like tones
+                that sit perfectly in a band mix without muddying the low end.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <path d="M9 18V5l12-2v13" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Acoustic</div>
+              <h3 class="gear-card-name">Yamaha FG800</h3>
+              <p class="gear-card-brand">Yamaha · FG Series</p>
+              <p class="gear-card-desc">
+                The guitar that started it all for me. I still reach for it in intimate settings,
+                songwriting sessions, and any moment where the raw warmth of an acoustic is the
+                right call.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- #gear-panel-guitar -->
+
+        <!-- AMP PANEL -->
+        <div class="gear-panel" id="gear-panel-amp" role="tabpanel" aria-labelledby="gear-tab-amp">
+          <div class="gear-grid reveal-group">
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="12" cy="13" r="4" />
+                  <circle cx="12" cy="13" r="1.5" />
+                  <rect x="7" y="5" width="10" height="4" rx="1" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Main amp</div>
+              <h3 class="gear-card-name">Fender Blues Junior IV</h3>
+              <p class="gear-card-brand">Fender · Blues Junior Series</p>
+              <p class="gear-card-desc">
+                A 15-watt all-tube combo that breaks up beautifully at moderate volumes. Warm,
+                responsive, and perfectly sized for church stages without ever overpowering the mix.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                  <circle cx="12" cy="14" r="4" />
+                  <path d="M8 7V5a4 4 0 018 0v2" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Backup</div>
+              <h3 class="gear-card-name">Boss Katana 50 MkII</h3>
+              <p class="gear-card-brand">Boss · Katana Series</p>
+              <p class="gear-card-desc">
+                My reliable solid-state backup with built-in effects. I use it for rehearsals and
+                smaller venues where bringing the tube amp isn&rsquo;t practical.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- #gear-panel-amp -->
+
+        <!-- PEDALS PANEL -->
+        <div
+          class="gear-panel"
+          id="gear-panel-pedals"
+          role="tabpanel"
+          aria-labelledby="gear-tab-pedals"
+        >
+          <div class="gear-grid reveal-group">
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <rect x="3" y="8" width="18" height="10" rx="2" />
+                  <circle cx="9" cy="13" r="2" />
+                  <line x1="15" y1="11" x2="19" y2="11" />
+                  <line x1="15" y1="13" x2="18" y2="13" />
+                  <line x1="15" y1="15" x2="17" y2="15" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Reverb</div>
+              <h3 class="gear-card-name">Strymon BigSky</h3>
+              <p class="gear-card-brand">Strymon · Reverb Pedal</p>
+              <p class="gear-card-desc">
+                The cornerstone of my atmospheric sound. The hall and plate reverbs create the
+                spacious, cathedral-like wash that defines my worship tone.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <path d="M3 12h3l3-9 4 18 3-9h5" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Delay</div>
+              <h3 class="gear-card-name">Boss DD-8</h3>
+              <p class="gear-card-brand">Boss · Digital Delay</p>
+              <p class="gear-card-desc">
+                Tap-tempo delay that locks to the band&rsquo;s groove. I use it subtly for lead
+                lines and more expressively during spontaneous worship moments.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Overdrive</div>
+              <h3 class="gear-card-name">Ibanez Tube Screamer</h3>
+              <p class="gear-card-brand">Ibanez · TS9</p>
+              <p class="gear-card-desc">
+                Light, musical overdrive that pushes my amp into natural breakup. It adds warmth and
+                sustain for lead playing without losing any clarity.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <rect x="4" y="4" width="16" height="16" rx="2" />
+                  <line x1="9" y1="9" x2="9" y2="15" />
+                  <line x1="12" y1="7" x2="12" y2="17" />
+                  <line x1="15" y1="9" x2="15" y2="15" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Volume</div>
+              <h3 class="gear-card-name">Ernie Ball VP Jr.</h3>
+              <p class="gear-card-brand">Ernie Ball · Volume Pedal</p>
+              <p class="gear-card-desc">
+                Smooth, silent volume swells between passages. Essential for the dynamic builds and
+                quiet moments that I believe define a great worship set.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- #gear-panel-pedals -->
+
+        <!-- EXTRAS PANEL -->
+        <div
+          class="gear-panel"
+          id="gear-panel-extras"
+          role="tabpanel"
+          aria-labelledby="gear-tab-extras"
+        >
+          <div class="gear-grid reveal-group">
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Strings</div>
+              <h3 class="gear-card-name">Elixir Nanoweb 10–46</h3>
+              <p class="gear-card-brand">Elixir · Coated Strings</p>
+              <p class="gear-card-desc">
+                The coated winding keeps my tone bright and consistent across long sets. I put on a
+                fresh set before every major event &mdash; and Elixirs last long enough between
+                gigs.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Picks</div>
+              <h3 class="gear-card-name">Dunlop Tortex 0.73mm</h3>
+              <p class="gear-card-brand">Dunlop · Tortex Standard</p>
+              <p class="gear-card-desc">
+                Medium gauge for the balance between attack and flex. I always keep a handful taped
+                to my mic stand for quick swaps mid-set.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="2" />
+                  <path d="M7 12h10M7 8h10M7 16h6" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Tuner</div>
+              <h3 class="gear-card-name">TC Electronic PolyTune 3</h3>
+              <p class="gear-card-brand">TC Electronic · Polyphonic Tuner</p>
+              <p class="gear-card-desc">
+                Polyphonic tuning &mdash; I strum all six strings at once and see which ones are
+                out. Fast, silent, and always first in my signal chain.
+              </p>
+            </div>
+
+            <div class="gear-card glass-card">
+              <div class="gear-card-icon" aria-hidden="true">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                >
+                  <path d="M12 22V12M12 12C12 7 7 4 4 6M12 12C12 7 17 4 20 6" />
+                </svg>
+              </div>
+              <div class="gear-card-badge">Cables</div>
+              <h3 class="gear-card-name">Mogami Gold Series</h3>
+              <p class="gear-card-brand">Mogami · Instrument Cables</p>
+              <p class="gear-card-desc">
+                Premium low-capacitance cables that preserve high-end detail and resist interference
+                on stage. The last upgrade I made that had an immediately audible difference.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- #gear-panel-extras -->
+      </div>
+      <!-- .section -->
+    </section>
+    <!-- #gear -->
+
+    <!-- ============================================================
+         WAVEFORM DIVIDER — between gear and contact
+         ============================================================ -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+        <path
+          d="M0,18 C140,36 300,4 480,20 C660,36 820,6 1000,22 C1080,28 1140,14 1200,18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          opacity="0.15"
+        />
+        <path
+          d="M0,28 C200,8 400,36 600,18 C800,0 1000,30 1200,16 L1200,40 L0,40Z"
+          fill="currentColor"
+          opacity="0.04"
+        />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         CONTACT & BOOKING SECTION
+         Three-part layout:
+           A) Hero statement — emotional headline + subtext
+           B) Contact methods — WhatsApp, email, social cards
+           C) Booking inquiry form — name, email, event type, message
+         TO EDIT:
+           - Replace href="https://wa.me/..." with Kenneth's WhatsApp link
+             Format: https://wa.me/254XXXXXXXXX (Kenya country code)
+           - Replace href="mailto:..." with Kenneth's real email
+           - Replace social href="#" with real profile URLs
+           - Form submission: wire the <form> to a service like
+             Formspree (formspree.io) by setting action="https://formspree.io/f/YOUR_ID"
+             or EmailJS — see comment in the <form> element below.
+         ============================================================ -->
+    <section id="contact" aria-label="Contact and Booking">
+      <!-- Full-width atmospheric header — dark always -->
+      <div class="contact-hero">
+        <div class="contact-hero-strings" aria-hidden="true">
+          <div class="contact-hero-string"></div>
+          <div class="contact-hero-string"></div>
+          <div class="contact-hero-string"></div>
+          <div class="contact-hero-string"></div>
+        </div>
+        <div class="section contact-hero-inner reveal">
+          <p class="eyebrow contact-eyebrow">Get in touch</p>
+          <h2 class="contact-hero-heading">
+            Let&rsquo;s create a worship<br />
+            <em>experience together.</em>
+          </h2>
+          <p class="contact-hero-sub">
+            Whether you&rsquo;re organising a gospel event, a church service, or a worship
+            conference &mdash; Kenneth would love to be part of it.
+          </p>
+        </div>
+      </div>
+      <!-- .contact-hero -->
+
+      <div class="section contact-body">
+        <!-- ── A: CONTACT METHOD CARDS ── -->
+        <div class="contact-methods reveal-group">
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6a — WHATSAPP NUMBER                            ║
+               ║                                                          ║
+               ║  Replace 254700000000 with Kenneth's real number.        ║
+               ║  Format: 254 + number without the leading 0              ║
+               ║  Example: +254 712 345 678 → 254712345678               ║
+               ║                                                          ║
+               ║  The pre-filled message after ?text= can also be edited. ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <a
+            href="https://wa.me/254740622962?text=Hi%20Kenneth%2C%20I%27d%20like%20to%20book%20you%20for%20an%20event."
+            class="contact-method-card glass-card"
+            target="_blank"
+            rel="noopener"
+            aria-label="Message Kenneth on WhatsApp"
+          >
+            <div class="contact-method-icon contact-method-icon--whatsapp">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                />
+              </svg>
+            </div>
+            <div class="contact-method-info">
+              <p class="contact-method-label">WhatsApp</p>
+              <p class="contact-method-value">Message directly</p>
+              <p class="contact-method-hint">Fastest response &mdash; usually within a few hours</p>
+            </div>
+            <div class="contact-method-arrow" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              >
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6b — EMAIL ADDRESS                              ║
+               ║                                                          ║
+               ║  Replace kenneth.Mugo@email.com with his real email.    ║
+               ║  Update it in TWO places:                                ║
+               ║    1. The href="mailto:..." attribute on this <a> tag    ║
+               ║    2. The visible text inside .contact-method-value      ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <a
+            href="mailto:kenneth.Mugo@email.com?subject=Booking%20Inquiry"
+            class="contact-method-card glass-card"
+            aria-label="Email Kenneth"
+          >
+            <div class="contact-method-icon contact-method-icon--email">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </div>
+            <div class="contact-method-info">
+              <p class="contact-method-label">Email</p>
+              <p class="contact-method-value">kenneth.Mugo@email.com</p>
+              <p class="contact-method-hint">For formal bookings &amp; event proposals</p>
+            </div>
+            <div class="contact-method-arrow" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              >
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6c — SOCIAL MEDIA LINKS (Contact section)       ║
+               ║                                                          ║
+               ║  Replace each href="#" with the real profile URL:        ║
+               ║    Instagram: https://instagram.com/YOUR_HANDLE          ║
+               ║    Facebook:  https://facebook.com/YOUR_PAGE             ║
+               ║    TikTok:    https://tiktok.com/@YOUR_HANDLE            ║
+               ║                                                          ║
+               ║  These same links also appear in the About section —     ║
+               ║  search for "CHANGE #6d" to update those too.            ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <!-- Social links row -->
+          <div class="contact-socials glass-card">
+            <p class="contact-socials-label">Follow the journey</p>
+            <div class="contact-socials-row">
+              <a
+                href="https://www.instagram.com/samwelageta?igsh=cnNzamQyM3NkcG9x"
+                class="contact-social-btn"
+                target="_blank"
+                rel="noopener"
+                aria-label="Kenneth on Instagram"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+                Instagram
+              </a>
+
+              <a
+                href="https://www.facebook.com/ageta.samwel"
+                class="contact-social-btn"
+                target="_blank"
+                rel="noopener"
+                aria-label="Kenneth on Facebook"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                  />
+                </svg>
+                Facebook
+              </a>
+
+              <a
+                href="https://www.tiktok.com/@kingkaya04?_r=1&_t=ZS-97arJTjRSnk"
+                class="contact-social-btn"
+                target="_blank"
+                rel="noopener"
+                aria-label="Kenneth on TikTok"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.52V6.78a4.85 4.85 0 01-1.02-.09z"
+                  />
+                </svg>
+                TikTok
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- .contact-methods -->
+
+        <!-- ── B: BOOKING INQUIRY FORM ──
+             TO WIRE UP FORM SUBMISSION:
+             Option 1 — Formspree (free, no backend needed):
+               1. Go to formspree.io and create a free account
+               2. Create a new form and copy your endpoint ID
+               3. Set the form action: action="https://formspree.io/f/YOUR_FORM_ID"
+               4. Set method="POST" on the <form> element
+               5. Done — submissions go to Kenneth's email
+
+             Option 2 — EmailJS (sends email from JS, no redirect):
+               See emailjs.com for setup. Replace the JS submit
+               handler in MODULE 15 below with emailjs.send().
+        -->
+        <div class="contact-form-wrap reveal">
+          <div class="contact-form-header">
+            <h3 class="contact-form-heading">Send a booking inquiry</h3>
+            <p class="contact-form-sub">
+              Tell Kenneth about your event and he&rsquo;ll get back to you within 24 hours.
+            </p>
+          </div>
+
+          <!-- ╔══════════════════════════════════════════════════════════╗
+               ║  CHANGE #6g — CONTACT FORM SUBMISSION                    ║
+               ║                                                          ║
+               ║  To receive form submissions by email (free, easy):      ║
+               ║  1. Go to formspree.io and sign up for a free account    ║
+               ║  2. Create a new form → copy the endpoint ID             ║
+               ║  3. Add these two attributes to the <form> tag below:    ║
+               ║       action="https://formspree.io/f/YOUR_FORM_ID"       ║
+               ║       method="POST"                                       ║
+               ║  4. In the JS (search MODULE 15), uncomment the          ║
+               ║     fetch() block and remove the demo setTimeout line    ║
+               ╚══════════════════════════════════════════════════════════╝ -->
+          <form
+            class="contact-form glass-card"
+            id="contact-form"
+            novalidate
+            aria-label="Booking inquiry form"
+          >
+            <!-- Name + Email row -->
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="field-name">Your name</label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="field-name"
+                  name="name"
+                  placeholder="Jane Muthoni"
+                  autocomplete="name"
+                  autocapitalize="words"
+                  enterkeyhint="next"
+                  required
+                />
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="field-email">Email address</label>
+                <input
+                  class="form-input"
+                  type="email"
+                  id="field-email"
+                  name="email"
+                  placeholder="jane@example.com"
+                  autocomplete="email"
+                  inputmode="email"
+                  autocapitalize="none"
+                  autocorrect="off"
+                  spellcheck="false"
+                  enterkeyhint="next"
+                  required
+                />
+                <span class="form-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <!-- Event type selector -->
+            <div class="form-field">
+              <label class="form-label" for="field-event">Event type</label>
+              <div class="form-select-wrap">
+                <select class="form-input form-select" id="field-event" name="event_type" required>
+                  <option value="" disabled selected>Select event type&hellip;</option>
+                  <option value="church-service">Church service</option>
+                  <option value="gospel-concert">Gospel concert</option>
+                  <option value="worship-conference">Worship conference</option>
+                  <option value="studio-session">Studio / recording session</option>
+                  <option value="private-event">Private event</option>
+                  <option value="other">Other</option>
+                </select>
+                <!-- Chevron icon -->
+                <svg
+                  class="form-select-chevron"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M3 5l4 4 4-4" />
+                </svg>
+              </div>
+              <span class="form-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Event date -->
+            <div class="form-field">
+              <label class="form-label" for="field-date">Event date</label>
+              <input class="form-input" type="date" id="field-date" name="event_date" />
+              <span class="form-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Message -->
+            <div class="form-field">
+              <label class="form-label" for="field-message"> Tell Kenneth about your event </label>
+              <textarea
+                class="form-input form-textarea"
+                id="field-message"
+                name="message"
+                rows="4"
+                placeholder="Share the vision, the venue, expected attendance, and anything else that would help Kenneth understand your event&hellip;"
+                required
+              ></textarea>
+              <span class="form-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Submit button -->
+            <button class="btn-gold form-submit" type="submit" id="form-submit">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M14 2L2 7l5 2 2 5 5-12z" />
+              </svg>
+              Send inquiry
+            </button>
+
+            <!-- Success / error state messages -->
+            <div class="form-feedback form-feedback--success" id="form-success" hidden>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <polyline points="3 9 7 13 15 5" />
+              </svg>
+              Thank you! Kenneth will be in touch within 24 hours.
+            </div>
+            <div class="form-feedback form-feedback--error" id="form-error" hidden>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="9" cy="9" r="7" />
+                <line x1="9" y1="6" x2="9" y2="9" />
+                <line x1="9" y1="12" x2="9" y2="12.5" />
+              </svg>
+              Something went wrong. Please try WhatsApp or email directly.
+            </div>
+          </form>
+        </div>
+        <!-- .contact-form-wrap -->
+      </div>
+      <!-- .contact-body -->
+
+      <!-- ── FOOTER ── -->
+      <footer class="site-footer">
+        <div class="section footer-inner">
+          <div class="footer-logo">
+            <span class="footer-logo-kk">K<span>K</span></span>
+            <span class="footer-logo-name">Kenneth Mugo</span>
+          </div>
+
+          <p class="footer-tagline">Creating moments of worship through guitar.</p>
+
+          <div class="footer-links">
+            <a href="#hero">Home</a>
+            <a href="#events">Events</a>
+            <a href="#about">About</a>
+            <a href="#media">Media</a>
+            <a href="#contact">Contact</a>
+          </div>
+
+          <p class="footer-copy">
+            &copy; <span id="footer-year"></span> Kenneth Mugo. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </section>
+    <!-- #contact -->
+
+    <!-- ============================================================
+         FLOATING AUDIO PLAYER
+         Resting: single gold circle button.
+         Hover/tap: tooltip slides in from right showing track info.
+         To update the track name → edit .audio-label-track text.
+         To swap audio file    → edit the <source src="..."> below.
+         ============================================================ -->
+    <div id="audio-player" role="region" aria-label="Ambient audio player">
+      <!-- Tooltip: hidden by default, revealed on hover or tap -->
+      <div class="audio-tooltip" aria-hidden="true">
+        <!-- Animated waveform (pulses when playing) -->
+        <div class="audio-waveform">
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+        </div>
+
+        <!-- ╔══════════════════════════════════════════════════════════╗
+             ║  CHANGE #6f — AUDIO TRACK NAME                           ║
+             ║  Update the text below to the real song/track title.     ║
+             ╚══════════════════════════════════════════════════════════╝ -->
+        <div class="audio-label">
+          <span class="audio-label-top">Now playing</span>
+          <span class="audio-label-track">Worship instrumental — Kenneth Mugo</span>
+        </div>
+      </div>
+      <!-- .audio-tooltip -->
+
+      <!-- Circle play/pause button — always visible -->
+      <button class="audio-btn" id="audio-btn" aria-label="Play ambient guitar music">
+        <!-- Play triangle (shown when paused) -->
+        <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 2l11 6-11 6V2z" />
+        </svg>
+        <!-- Pause bars (shown when playing) -->
+        <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true">
+          <rect x="3" y="2" width="4" height="12" rx="1.5" />
+          <rect x="9" y="2" width="4" height="12" rx="1.5" />
+        </svg>
+      </button>
+
+      <!-- ╔══════════════════════════════════════════════════════════╗
+           ║  CHANGE #6e — AMBIENT AUDIO FILE                        ║
+           ║                                                          ║
+           ║  1. Create a folder called "audio" next to index.html   ║
+           ║  2. Place Kenneth's guitar loop file inside it          ║
+           ║  3. Name it worship-loop.mp3  (or update the src below) ║
+           ║  4. Also update .audio-label-track text to the real      ║
+           ║     track name (search for "Worship instrumental")       ║
+           ║                                                          ║
+           ║  Recommended: 60–120 second ambient instrumental loop,  ║
+           ║  fades in and out cleanly at both ends.                 ║
+           ╚══════════════════════════════════════════════════════════╝ -->
+      <audio id="audio-element" loop preload="none">
+        <source src="audio/worship-loop.mp3" type="audio/mpeg" />
+      </audio>
+    </div>
+    <!-- #audio-player -->
+
+    <!-- ============================================================
+         JAVASCRIPT
+         Organised into clearly labeled modules:
+           1. Theme toggle
+           2. Custom cursor
+           3. Guitar string pluck effect  (3B: hero dot field)
+           4. Audio player
+           5. Mobile nav
+           6. Scroll reveal (Intersection Observer)
+           7. Theme init (reads system preference on load)
+         ============================================================ -->
+    <script src="js/main.js"></script>
+  </body>
+</html>
